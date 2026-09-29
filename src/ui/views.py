@@ -71,19 +71,19 @@ def render_sidebar(metrics: dict, data_note: str) -> str:
             f"{label}{suffix}",
             key=f"nav_{key}",
             type="primary" if st.session_state.page == key else "secondary",
-            use_container_width=True,
+            use_container_width="stretch",
         )
         if clicked:
             st.session_state.page = key
             st.rerun()
     st.sidebar.markdown("")
-    if st.sidebar.button("RUN NEURAL AUDIT", type="primary", use_container_width=True):
+    if st.sidebar.button("RUN NEURAL AUDIT", type="primary", use_container_width="stretch"):
         st.cache_data.clear()
         st.session_state.page = "dashboard"
         st.rerun()
     st.sidebar.markdown("")
     st.sidebar.markdown('<div class="pc-kicker">Emergency / Interlock</div>', unsafe_allow_html=True)
-    if st.sidebar.button("ESD INTERLOCK", use_container_width=True):
+    if st.sidebar.button("ESD INTERLOCK", use_container_width="stretch"):
         st.session_state.show_esd = True
         st.session_state.page = "terminal"
         st.rerun()
@@ -120,7 +120,7 @@ def render_topbar(df: pd.DataFrame, metrics: dict) -> pd.DataFrame:
             unsafe_allow_html=True,
         )
     with right:
-        if st.button("View flagged reports", type="primary", use_container_width=True):
+        if st.button("View flagged reports", type="primary", use_container_width="stretch"):
             st.session_state.page = "anomaly"
             st.rerun()
         st.caption("Opens flagged reports for human review. No control action is taken.")
@@ -201,7 +201,7 @@ def render_digital_twin(df: pd.DataFrame, patterns: dict) -> None:
                 "critical": "Critical flags",
             }
         )
-        st.dataframe(display_nodes, use_container_width=True, hide_index=True)
+        st.dataframe(display_nodes, use_container_width="stretch", hide_index=True)
         st.markdown("#### Recurring site–activity–barrier patterns")
         st.caption(
             "Rule-based grouping by site, activity, and failed-barrier text. "
@@ -264,7 +264,7 @@ def render_digital_twin(df: pd.DataFrame, patterns: dict) -> None:
                 )
                 st.dataframe(
                     recurring.head(10),
-                    use_container_width=True,
+                    use_container_width="stretch",
                     hide_index=True,
                 )
         else:
@@ -523,7 +523,7 @@ DISPLAY_COLUMNS = [
 ]
 def _show_table(df: pd.DataFrame) -> None:
     cols = [c for c in DISPLAY_COLUMNS if c in df.columns]
-    st.dataframe(df[cols] if cols else df, use_container_width=True, hide_index=True)
+    st.dataframe(df[cols] if cols else df, use_container_width="stretch", hide_index=True)
 def page_dpr_document_ai(df: pd.DataFrame, metrics: dict) -> None:
     st.markdown('<div class="panel-title">DPR Document AI</div>', unsafe_allow_html=True)
     st.caption("Entity extraction, SIF classification, and risk scoring from the existing NLP pipeline.")
@@ -572,7 +572,7 @@ def page_location_slice(df: pd.DataFrame, patterns: dict, title: str, needles: l
     render_kpi_row(m)
     loc = patterns.get("location_patterns", pd.DataFrame())
     if loc is not None and not loc.empty:
-        st.dataframe(loc.sort_values("sif_rate", ascending=False), use_container_width=True, hide_index=True)
+        st.dataframe(loc.sort_values("sif_rate", ascending=False), use_container_width="stretch", hide_index=True)
     _show_table(subset)
 def page_anomaly(df: pd.DataFrame) -> None:
     st.markdown('<div class="panel-title">Anomaly Detection</div>', unsafe_allow_html=True)
@@ -629,7 +629,7 @@ def page_diagnostics(df: pd.DataFrame, metrics: dict) -> None:
     st.write("Confusion matrix [NO, YES]:")
     st.dataframe(
         pd.DataFrame(cm, index=["Actual NO", "Actual YES"], columns=["Pred NO", "Pred YES"]),
-        use_container_width=True,
+        use_container_width="stretch",
     )
     st.text(
         classification_report(
