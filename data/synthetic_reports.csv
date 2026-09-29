@@ -1,0 +1,251 @@
+report_id,date,site,location,activity,report_type,free_text,ground_truth_hazard,ground_truth_energy,ground_truth_barrier,ground_truth_sif,ground_truth_lsr,ground_truth_pattern
+OIL-SYN-0001,2025-01-13,Bokakhat,Gas Gathering Station,Inspection,Unsafe Act,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0002,2025-12-13,Digboi,Compressor Station,Inspection,Unsafe Act,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0003,2025-04-22,Moran,Maintenance Area,Maintenance,Near Miss,Safety observation: Worker prepared to work on equipment while electrical supply remained connected.,Unexpected Energy Release,Electrical Energy,Lockout Tagout,YES,Energy Isolation,Energy Isolation Failure
+OIL-SYN-0004,2025-08-03,Moran,Pipeline Corridor,Inspection,Unsafe Condition,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0005,2025-01-04,Naharkatiya,Electrical Substation,Inspection,Unsafe Condition,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0006,2025-04-21,KGB,Drilling Rig,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0007,2026-03-10,KGB,Compressor Station,Confined Space Entry,Unsafe Condition,Safety observation: Worker prepared to enter a confined space without gas testing.,Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0008,2026-05-14,Jorhat,Drilling Rig,Inspection,Unsafe Condition,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0009,2025-11-13,KGB,Compressor Station,Inspection,Near Miss,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0010,2025-12-05,Moran,Processing Plant,Mechanical Work,Unsafe Condition,Worker was exposed to stored mechanical energy during repair.,Line of Fire,Mechanical Energy,Barricading,YES,Line of Fire,Line of Fire Exposure
+OIL-SYN-0011,2025-11-22,KGB,Production Area,Inspection,Unsafe Condition,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0012,2025-05-17,Digboi,Compressor Station,Hot Work,Unsafe Condition,"During routine inspection, Worker began welding before gas testing was completed.",Fire,Thermal Energy,Permit to Work,YES,Hot Work,Hot Work Control Failure
+OIL-SYN-0013,2026-04-19,Moran,Warehouse,Inspection,Unsafe Act,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0014,2025-01-17,KGB,Tank Farm,Confined Space Entry,Near Miss,"During routine inspection, Atmospheric testing was not completed before entry.",Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0015,2025-06-11,Moran,Warehouse,Inspection,Unsafe Condition,General housekeeping condition requires attention.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0016,2025-11-26,Tinsukia,Production Area,Maintenance,Unsafe Act,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0017,2025-10-15,Bokakhat,Electrical Substation,Vehicle Movement,Unsafe Act,Field observation: Vehicle reversing activity occurred without clear pedestrian control.,Vehicle Strike,Vehicle Energy,Traffic Control,YES,Driving,Vehicle-Pedestrian Interaction
+OIL-SYN-0018,2025-03-12,Tinsukia,Drilling Rig,Inspection,Unsafe Act,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0019,2025-03-20,Naharkatiya,Warehouse,Inspection,Near Miss,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0020,2025-07-15,Tinsukia,Maintenance Area,Confined Space Entry,Near Miss,Safety observation: Worker prepared to enter a confined space without gas testing.,Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0021,2026-03-30,Bokakhat,Warehouse,Lifting Operation,Unsafe Condition,Field observation: Personnel were observed inside the lifting exclusion zone.,Dropped Object,Gravity,Lifting Plan,YES,Safe Mechanical Lifting,Lifting Operation Failure
+OIL-SYN-0022,2025-01-02,Bokakhat,Maintenance Area,Hot Work,Unsafe Condition,Safety observation: Hot work was observed without confirming the required permit.,Fire,Thermal Energy,Permit to Work,YES,Hot Work,Hot Work Control Failure
+OIL-SYN-0023,2025-09-17,Moran,Production Area,Inspection,Unsafe Act,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0024,2026-02-03,Duliajan,Compressor Station,Inspection,Unsafe Condition,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0025,2026-04-21,KGB,Processing Plant,Maintenance,Near Miss,"During routine inspection, Worker was working at height without connecting the safety harness.",Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0026,2025-02-13,Tinsukia,Drilling Rig,Inspection,Near Miss,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0027,2025-03-07,Tinsukia,Maintenance Area,Maintenance,Unsafe Condition,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0028,2025-11-07,Jorhat,Gas Gathering Station,Maintenance,Near Miss,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0029,2025-12-20,Moran,Electrical Substation,Maintenance,Unsafe Condition,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0030,2025-11-29,KGB,Pipeline Corridor,Maintenance,Near Miss,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0031,2025-05-07,Moran,Drilling Rig,Inspection,Unsafe Act,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0032,2025-04-28,Moran,Well Pad,Inspection,Near Miss,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0033,2025-04-28,Digboi,Well Pad,Inspection,Unsafe Condition,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0034,2025-05-02,Bokakhat,Warehouse,Production Operation,Unsafe Act,It was observed that Safety control was overridden without an approved procedure.,Unexpected Energy Release,Stored Energy,Safety Interlock,YES,Bypassing Safety Controls,Safety Control Bypass
+OIL-SYN-0035,2026-03-28,Tinsukia,Gas Gathering Station,Inspection,Unsafe Condition,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0036,2025-04-08,Digboi,Drilling Rig,Inspection,Unsafe Condition,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0037,2025-07-30,Tinsukia,Electrical Substation,Inspection,Near Miss,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0038,2025-11-27,Digboi,Well Pad,Inspection,Near Miss,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0039,2026-03-18,Digboi,Gas Gathering Station,Inspection,Unsafe Act,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0040,2025-03-13,Jorhat,Production Area,Maintenance,Unsafe Condition,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0041,2026-04-18,Digboi,Pipeline Corridor,Pipeline Work,Near Miss,Maintenance activity began without proper work authorization.,Pressure Release,Pressure,Permit to Work,YES,Work Authorisation,Unauthorised Work
+OIL-SYN-0042,2026-03-05,Duliajan,Drilling Rig,Maintenance,Unsafe Act,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0043,2025-09-06,Tinsukia,Gas Gathering Station,Vehicle Movement,Unsafe Condition,"During routine inspection, Pedestrian walked close to a moving vehicle in the work area.",Vehicle Strike,Vehicle Energy,Traffic Control,YES,Driving,Vehicle-Pedestrian Interaction
+OIL-SYN-0044,2025-07-19,Bokakhat,Pipeline Corridor,Confined Space Entry,Near Miss,Safety observation: Required confined space atmospheric checks were incomplete.,Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0045,2025-10-12,Tinsukia,Production Area,Inspection,Unsafe Condition,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0046,2025-01-30,Duliajan,Electrical Substation,Lifting Operation,Near Miss,Worker entered below a suspended load during lifting.,Dropped Object,Gravity,Lifting Plan,YES,Safe Mechanical Lifting,Lifting Operation Failure
+OIL-SYN-0047,2026-04-16,Naharkatiya,Well Pad,Inspection,Unsafe Act,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0048,2025-02-05,Digboi,Warehouse,Inspection,Unsafe Act,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0049,2026-04-28,Moran,Compressor Station,Inspection,Unsafe Act,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0050,2025-08-03,KGB,Processing Plant,Inspection,Near Miss,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0051,2025-05-03,Bokakhat,Tank Farm,Maintenance,Near Miss,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0052,2025-08-23,KGB,Drilling Rig,Inspection,Unsafe Condition,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0053,2025-10-16,Digboi,Drilling Rig,Inspection,Unsafe Act,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0054,2025-03-09,KGB,Drilling Rig,Maintenance,Unsafe Act,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0055,2025-03-22,Tinsukia,Maintenance Area,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0056,2026-02-18,Duliajan,Warehouse,Inspection,Near Miss,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0057,2025-12-06,Digboi,Production Area,Maintenance,Unsafe Act,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0058,2026-01-16,Naharkatiya,Processing Plant,Maintenance,Near Miss,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0059,2025-06-25,Moran,Warehouse,Confined Space Entry,Unsafe Act,Field observation: Entry team did not verify gas test results before access.,Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0060,2025-08-05,Bokakhat,Well Pad,Maintenance,Near Miss,"During routine inspection, Electrical panel was accessed without checking lockout status.",Unexpected Energy Release,Electrical Energy,Lockout Tagout,YES,Energy Isolation,Energy Isolation Failure
+OIL-SYN-0061,2025-03-24,Tinsukia,Maintenance Area,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0062,2025-02-27,Digboi,Electrical Substation,Maintenance,Unsafe Act,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0063,2026-03-04,KGB,Compressor Station,Inspection,Unsafe Act,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0064,2025-01-22,Bokakhat,Workshop,Maintenance,Unsafe Act,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0065,2025-04-18,Moran,Warehouse,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0066,2026-03-29,Jorhat,Compressor Station,Inspection,Unsafe Act,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0067,2025-05-02,Naharkatiya,Production Area,Maintenance,Unsafe Condition,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0068,2026-01-13,KGB,Tank Farm,Maintenance,Near Miss,"During routine inspection, Fall arrest equipment was not connected during maintenance.",Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0069,2026-03-23,Duliajan,Pipeline Corridor,Maintenance,Unsafe Condition,"During site activity, Worker climbed onto an elevated structure without proper protection.",Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0070,2026-02-12,Moran,Gas Gathering Station,Inspection,Near Miss,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0071,2025-06-18,Bokakhat,Drilling Rig,Confined Space Entry,Near Miss,Safety observation: Worker was exposed to a potentially hazardous atmosphere during entry preparation.,Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0072,2026-03-08,KGB,Well Pad,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0073,2026-05-08,Bokakhat,Well Pad,Mechanical Work,Near Miss,Field observation: Worker entered the equipment swing area without adequate separation.,Line of Fire,Mechanical Energy,Barricading,YES,Line of Fire,Line of Fire Exposure
+OIL-SYN-0074,2025-08-12,Digboi,Tank Farm,Maintenance,Near Miss,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0075,2025-01-23,Jorhat,Well Pad,Pipeline Work,Unsafe Condition,Field observation: Job was initiated without confirming the work permit.,Pressure Release,Pressure,Permit to Work,YES,Work Authorisation,Unauthorised Work
+OIL-SYN-0076,2025-12-07,KGB,Compressor Station,Lifting Operation,Unsafe Condition,Safety observation: Personnel were observed inside the lifting exclusion zone.,Dropped Object,Gravity,Lifting Plan,YES,Safe Mechanical Lifting,Lifting Operation Failure
+OIL-SYN-0077,2025-12-08,Jorhat,Workshop,Inspection,Near Miss,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0078,2025-03-07,Moran,Tank Farm,Inspection,Unsafe Condition,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0079,2026-04-08,Naharkatiya,Compressor Station,Inspection,Unsafe Condition,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0080,2026-03-03,Duliajan,Processing Plant,Maintenance,Unsafe Act,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0081,2025-10-24,KGB,Pipeline Corridor,Inspection,Unsafe Condition,General housekeeping condition requires attention.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0082,2025-09-19,Tinsukia,Electrical Substation,Maintenance,Near Miss,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0083,2025-09-21,KGB,Drilling Rig,Maintenance,Unsafe Act,"During routine inspection, Fall arrest equipment was not connected during maintenance.",Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0084,2025-01-24,Moran,Pipeline Corridor,Mechanical Work,Near Miss,"During site activity, Personnel were observed inside the potential line of fire.",Line of Fire,Mechanical Energy,Barricading,YES,Line of Fire,Line of Fire Exposure
+OIL-SYN-0085,2026-01-03,Jorhat,Pipeline Corridor,Inspection,Unsafe Act,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0086,2025-12-19,Duliajan,Drilling Rig,Vehicle Movement,Near Miss,"During routine inspection, A light vehicle moved through an area occupied by pedestrians.",Vehicle Strike,Vehicle Energy,Traffic Control,YES,Driving,Vehicle-Pedestrian Interaction
+OIL-SYN-0087,2025-01-26,Moran,Drilling Rig,Inspection,Unsafe Act,General housekeeping condition requires attention.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0088,2025-12-08,KGB,Pipeline Corridor,Inspection,Near Miss,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0089,2025-08-07,Tinsukia,Production Area,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0090,2026-01-20,Moran,Warehouse,Maintenance,Near Miss,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0091,2025-05-03,Bokakhat,Pipeline Corridor,Inspection,Near Miss,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0092,2025-05-20,KGB,Workshop,Maintenance,Near Miss,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0093,2025-03-19,Moran,Tank Farm,Hot Work,Unsafe Condition,Worker began welding before gas testing was completed.,Fire,Thermal Energy,Permit to Work,YES,Hot Work,Hot Work Control Failure
+OIL-SYN-0094,2025-10-05,Tinsukia,Tank Farm,Inspection,Unsafe Act,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0095,2025-07-19,Duliajan,Compressor Station,Inspection,Unsafe Condition,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0096,2025-06-30,Bokakhat,Tank Farm,Vehicle Movement,Unsafe Act,"During site activity, A light vehicle moved through an area occupied by pedestrians.",Vehicle Strike,Vehicle Energy,Traffic Control,YES,Driving,Vehicle-Pedestrian Interaction
+OIL-SYN-0097,2025-09-06,Duliajan,Tank Farm,Inspection,Near Miss,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0098,2025-07-27,Naharkatiya,Pipeline Corridor,Maintenance,Unsafe Act,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0099,2025-10-01,Duliajan,Tank Farm,Inspection,Near Miss,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0100,2025-02-12,Jorhat,Production Area,Inspection,Unsafe Condition,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0101,2025-05-14,Jorhat,Workshop,Maintenance,Unsafe Condition,Field observation: Elevated work was performed without complete fall protection.,Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0102,2025-07-14,Bokakhat,Tank Farm,Maintenance,Unsafe Act,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0103,2026-01-19,Duliajan,Workshop,Inspection,Near Miss,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0104,2026-05-06,Duliajan,Well Pad,Maintenance,Near Miss,Worker climbed onto an elevated structure without proper protection.,Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0105,2025-03-06,Tinsukia,Warehouse,Mechanical Work,Near Miss,"During site activity, Worker was exposed to stored mechanical energy during repair.",Line of Fire,Mechanical Energy,Barricading,YES,Line of Fire,Line of Fire Exposure
+OIL-SYN-0106,2025-07-08,Naharkatiya,Compressor Station,Inspection,Near Miss,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0107,2026-02-03,Naharkatiya,Processing Plant,Inspection,Near Miss,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0108,2025-06-09,Jorhat,Tank Farm,Maintenance,Near Miss,It was observed that Personnel accessed an elevated platform without adequate fall protection.,Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0109,2025-05-05,Digboi,Electrical Substation,Inspection,Unsafe Condition,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0110,2025-11-04,Digboi,Compressor Station,Inspection,Unsafe Act,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0111,2025-08-08,KGB,Drilling Rig,Inspection,Near Miss,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0112,2026-03-11,Jorhat,Pipeline Corridor,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0113,2025-11-22,Tinsukia,Electrical Substation,Maintenance,Unsafe Condition,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0114,2025-09-25,Bokakhat,Compressor Station,Pipeline Work,Unsafe Condition,"During site activity, Pipeline maintenance started without valid work authorization.",Pressure Release,Pressure,Permit to Work,YES,Work Authorisation,Unauthorised Work
+OIL-SYN-0115,2025-10-31,Bokakhat,Workshop,Inspection,Unsafe Act,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0116,2025-02-14,Bokakhat,Pipeline Corridor,Inspection,Unsafe Condition,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0117,2025-12-09,Jorhat,Workshop,Inspection,Unsafe Condition,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0118,2025-04-04,Tinsukia,Gas Gathering Station,Inspection,Unsafe Condition,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0119,2026-03-27,Bokakhat,Maintenance Area,Inspection,Near Miss,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0120,2025-02-13,Moran,Electrical Substation,Inspection,Unsafe Condition,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0121,2025-05-04,Tinsukia,Warehouse,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0122,2025-01-09,Digboi,Processing Plant,Inspection,Unsafe Condition,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0123,2025-06-06,KGB,Pipeline Corridor,Inspection,Near Miss,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0124,2026-01-17,KGB,Workshop,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0125,2025-05-09,Moran,Drilling Rig,Inspection,Unsafe Act,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0126,2026-01-16,Naharkatiya,Gas Gathering Station,Inspection,Near Miss,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0127,2026-01-06,Bokakhat,Drilling Rig,Inspection,Unsafe Act,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0128,2025-07-04,Naharkatiya,Processing Plant,Inspection,Near Miss,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0129,2025-05-21,Duliajan,Well Pad,Inspection,Unsafe Condition,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0130,2025-03-06,Tinsukia,Drilling Rig,Inspection,Unsafe Act,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0131,2025-08-29,Tinsukia,Pipeline Corridor,Inspection,Unsafe Act,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0132,2025-05-10,Tinsukia,Drilling Rig,Inspection,Unsafe Act,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0133,2025-02-07,Duliajan,Production Area,Maintenance,Near Miss,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0134,2025-02-13,Moran,Drilling Rig,Inspection,Unsafe Condition,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0135,2026-02-09,Moran,Maintenance Area,Inspection,Unsafe Condition,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0136,2025-06-02,Jorhat,Processing Plant,Inspection,Near Miss,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0137,2026-05-07,Digboi,Gas Gathering Station,Maintenance,Unsafe Act,Safety observation: Fall arrest equipment was not connected during maintenance.,Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0138,2025-03-30,Digboi,Production Area,Maintenance,Near Miss,"During site activity, Worker nearly contacted an energized component during maintenance.",Unexpected Energy Release,Electrical Energy,Lockout Tagout,YES,Energy Isolation,Energy Isolation Failure
+OIL-SYN-0139,2025-05-30,Duliajan,Gas Gathering Station,Maintenance,Near Miss,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0140,2026-03-17,Tinsukia,Drilling Rig,Inspection,Unsafe Act,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0141,2026-02-08,Moran,Tank Farm,Inspection,Near Miss,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0142,2025-03-18,Bokakhat,Production Area,Mechanical Work,Unsafe Condition,"During routine inspection, Worker stood close to moving machinery during maintenance.",Line of Fire,Mechanical Energy,Barricading,YES,Line of Fire,Line of Fire Exposure
+OIL-SYN-0143,2026-02-27,Bokakhat,Pipeline Corridor,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0144,2025-12-25,Jorhat,Processing Plant,Inspection,Near Miss,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0145,2025-02-11,Duliajan,Tank Farm,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0146,2025-01-14,Digboi,Gas Gathering Station,Inspection,Near Miss,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0147,2025-01-11,Bokakhat,Compressor Station,Inspection,Unsafe Act,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0148,2025-11-30,Tinsukia,Processing Plant,Maintenance,Near Miss,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0149,2026-02-21,Tinsukia,Drilling Rig,Inspection,Unsafe Condition,General housekeeping condition requires attention.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0150,2025-06-14,Digboi,Production Area,Inspection,Unsafe Condition,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0151,2025-05-28,Jorhat,Maintenance Area,Inspection,Unsafe Condition,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0152,2025-05-10,KGB,Drilling Rig,Vehicle Movement,Near Miss,Safety observation: Pedestrian walked close to a moving vehicle in the work area.,Vehicle Strike,Vehicle Energy,Traffic Control,YES,Driving,Vehicle-Pedestrian Interaction
+OIL-SYN-0153,2025-01-28,Moran,Maintenance Area,Inspection,Near Miss,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0154,2025-11-17,Tinsukia,Well Pad,Inspection,Unsafe Condition,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0155,2026-04-20,Bokakhat,Pipeline Corridor,Maintenance,Near Miss,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0156,2025-01-15,Moran,Electrical Substation,Maintenance,Unsafe Condition,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0157,2025-10-10,Jorhat,Drilling Rig,Inspection,Unsafe Act,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0158,2025-03-02,Naharkatiya,Pipeline Corridor,Maintenance,Near Miss,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0159,2025-12-28,Bokakhat,Tank Farm,Inspection,Unsafe Condition,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0160,2025-05-05,Tinsukia,Maintenance Area,Maintenance,Unsafe Condition,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0161,2025-11-03,Naharkatiya,Drilling Rig,Confined Space Entry,Near Miss,Field observation: Required confined space atmospheric checks were incomplete.,Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0162,2025-01-02,Bokakhat,Electrical Substation,Maintenance,Near Miss,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0163,2025-12-04,Tinsukia,Production Area,Inspection,Near Miss,General housekeeping condition requires attention.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0164,2025-06-20,Jorhat,Pipeline Corridor,Maintenance,Unsafe Condition,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0165,2025-12-24,Moran,Compressor Station,Inspection,Unsafe Act,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0166,2025-07-30,Duliajan,Workshop,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0167,2026-02-20,Jorhat,Tank Farm,Inspection,Near Miss,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0168,2025-09-11,Duliajan,Production Area,Inspection,Near Miss,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0169,2025-02-21,Tinsukia,Drilling Rig,Inspection,Unsafe Condition,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0170,2025-03-15,Jorhat,Warehouse,Hot Work,Unsafe Condition,"During site activity, Hot work was observed without confirming the required permit.",Fire,Thermal Energy,Permit to Work,YES,Hot Work,Hot Work Control Failure
+OIL-SYN-0171,2025-12-21,Jorhat,Warehouse,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0172,2026-03-16,Jorhat,Workshop,Inspection,Near Miss,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0173,2025-09-07,Duliajan,Compressor Station,Inspection,Unsafe Act,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0174,2026-04-17,Bokakhat,Gas Gathering Station,Inspection,Unsafe Act,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0175,2025-02-20,Digboi,Pipeline Corridor,Maintenance,Near Miss,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0176,2025-01-15,Duliajan,Workshop,Inspection,Unsafe Act,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0177,2025-07-11,Jorhat,Production Area,Inspection,Near Miss,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0178,2025-12-16,Naharkatiya,Production Area,Maintenance,Unsafe Act,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0179,2025-07-15,Moran,Pipeline Corridor,Maintenance,Near Miss,Tools were not properly arranged after maintenance.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0180,2025-08-25,Bokakhat,Pipeline Corridor,Confined Space Entry,Unsafe Condition,"During site activity, Worker prepared to enter a confined space without gas testing.",Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0181,2025-03-22,Digboi,Pipeline Corridor,Inspection,Near Miss,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0182,2026-05-08,Jorhat,Electrical Substation,Maintenance,Unsafe Condition,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0183,2025-04-12,Jorhat,Pipeline Corridor,Inspection,Unsafe Act,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0184,2025-07-03,Bokakhat,Electrical Substation,Maintenance,Unsafe Act,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0185,2025-12-04,Jorhat,Processing Plant,Inspection,Near Miss,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0186,2026-02-03,Duliajan,Compressor Station,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0187,2026-04-08,Bokakhat,Gas Gathering Station,Inspection,Unsafe Condition,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0188,2025-04-08,Bokakhat,Warehouse,Hot Work,Near Miss,Safety observation: Hot work was observed without confirming the required permit.,Fire,Thermal Energy,Permit to Work,YES,Hot Work,Hot Work Control Failure
+OIL-SYN-0189,2026-02-08,Tinsukia,Well Pad,Lifting Operation,Unsafe Condition,A person stood beneath a suspended component during crane operation.,Dropped Object,Gravity,Lifting Plan,YES,Safe Mechanical Lifting,Lifting Operation Failure
+OIL-SYN-0190,2025-08-01,Naharkatiya,Gas Gathering Station,Maintenance,Near Miss,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0191,2025-07-07,Bokakhat,Production Area,Maintenance,Unsafe Condition,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0192,2025-06-01,KGB,Drilling Rig,Inspection,Unsafe Act,General housekeeping condition requires attention.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0193,2026-05-10,Moran,Warehouse,Vehicle Movement,Unsafe Condition,Worker was exposed to a moving vehicle during site movement.,Vehicle Strike,Vehicle Energy,Traffic Control,YES,Driving,Vehicle-Pedestrian Interaction
+OIL-SYN-0194,2025-10-02,Digboi,Pipeline Corridor,Lifting Operation,Unsafe Condition,It was observed that Lifting activity continued without maintaining a clear exclusion zone.,Dropped Object,Gravity,Lifting Plan,YES,Safe Mechanical Lifting,Lifting Operation Failure
+OIL-SYN-0195,2026-04-27,KGB,Drilling Rig,Inspection,Unsafe Act,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0196,2025-11-14,KGB,Compressor Station,Inspection,Near Miss,Minor oil stain observed near the maintenance area.,Minor Spill,None,Spill Control,NO,,
+OIL-SYN-0197,2026-02-26,Tinsukia,Electrical Substation,Confined Space Entry,Unsafe Act,Required confined space atmospheric checks were incomplete.,Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0198,2025-01-20,Bokakhat,Pipeline Corridor,Mechanical Work,Near Miss,"During routine inspection, Employee was positioned in the line of fire while equipment was operating.",Line of Fire,Mechanical Energy,Barricading,YES,Line of Fire,Line of Fire Exposure
+OIL-SYN-0199,2025-08-21,KGB,Warehouse,Pipeline Work,Near Miss,It was observed that Required authorization was missing when the task commenced.,Pressure Release,Pressure,Permit to Work,YES,Work Authorisation,Unauthorised Work
+OIL-SYN-0200,2026-03-30,Jorhat,Warehouse,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0201,2026-04-26,Bokakhat,Well Pad,Inspection,Unsafe Condition,Storage area requires better organization.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0202,2025-08-16,Moran,Workshop,Mechanical Work,Near Miss,It was observed that Maintenance personnel were working close to an active machine.,Line of Fire,Mechanical Energy,Barricading,YES,Line of Fire,Line of Fire Exposure
+OIL-SYN-0203,2025-07-23,Bokakhat,Gas Gathering Station,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0204,2025-04-19,Duliajan,Well Pad,Lifting Operation,Near Miss,"During routine inspection, Load was being lifted while workers remained nearby.",Dropped Object,Gravity,Lifting Plan,YES,Safe Mechanical Lifting,Lifting Operation Failure
+OIL-SYN-0205,2026-03-01,Moran,Compressor Station,Maintenance,Unsafe Act,Field observation: Worker climbed onto an elevated structure without proper protection.,Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0206,2025-11-02,Duliajan,Processing Plant,Inspection,Unsafe Act,Minor lighting issue noticed in the work area.,Poor Lighting,None,Lighting Control,NO,,
+OIL-SYN-0207,2025-10-04,Bokakhat,Production Area,Inspection,Near Miss,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0208,2025-03-09,Duliajan,Workshop,Inspection,Unsafe Act,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0209,2025-01-09,Naharkatiya,Processing Plant,Inspection,Unsafe Act,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0210,2025-09-27,Digboi,Electrical Substation,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0211,2025-07-05,Digboi,Pipeline Corridor,Inspection,Unsafe Act,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0212,2025-01-23,Bokakhat,Pipeline Corridor,Inspection,Unsafe Act,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0213,2025-09-03,Jorhat,Tank Farm,Mechanical Work,Unsafe Condition,Safety observation: Personnel were observed inside the potential line of fire.,Line of Fire,Mechanical Energy,Barricading,YES,Line of Fire,Line of Fire Exposure
+OIL-SYN-0214,2025-02-11,KGB,Compressor Station,Hot Work,Unsafe Condition,"During routine inspection, Hot work was observed without confirming the required permit.",Fire,Thermal Energy,Permit to Work,YES,Hot Work,Hot Work Control Failure
+OIL-SYN-0215,2025-10-27,KGB,Tank Farm,Inspection,Near Miss,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0216,2025-09-16,Jorhat,Drilling Rig,Inspection,Near Miss,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0217,2025-12-02,Moran,Tank Farm,Production Operation,Unsafe Condition,"During site activity, Safety control was overridden without an approved procedure.",Unexpected Energy Release,Stored Energy,Safety Interlock,YES,Bypassing Safety Controls,Safety Control Bypass
+OIL-SYN-0218,2025-07-24,Jorhat,Electrical Substation,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0219,2025-12-07,Bokakhat,Workshop,Maintenance,Near Miss,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0220,2025-02-04,Digboi,Drilling Rig,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0221,2026-01-14,KGB,Production Area,Pipeline Work,Near Miss,It was observed that Work started before the required permit was issued.,Pressure Release,Pressure,Permit to Work,YES,Work Authorisation,Unauthorised Work
+OIL-SYN-0222,2025-12-10,Digboi,Tank Farm,Inspection,Near Miss,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0223,2025-08-05,Duliajan,Processing Plant,Inspection,Unsafe Condition,Worker was reminded to maintain good housekeeping practices.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0224,2025-10-23,Moran,Production Area,Inspection,Unsafe Condition,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0225,2025-02-25,KGB,Maintenance Area,Lifting Operation,Near Miss,Field observation: Personnel were observed inside the lifting exclusion zone.,Dropped Object,Gravity,Lifting Plan,YES,Safe Mechanical Lifting,Lifting Operation Failure
+OIL-SYN-0226,2025-08-08,Duliajan,Compressor Station,Confined Space Entry,Unsafe Condition,"During routine inspection, Worker prepared to enter a confined space without gas testing.",Toxic Gas Exposure,Chemical Energy,Gas Testing,YES,Confined Spaces,Confined Space Control Failure
+OIL-SYN-0227,2025-06-08,KGB,Workshop,Inspection,Unsafe Act,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0228,2025-10-17,Jorhat,Drilling Rig,Maintenance,Near Miss,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0229,2025-01-16,Digboi,Electrical Substation,Inspection,Unsafe Act,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0230,2025-08-21,KGB,Production Area,Inspection,Unsafe Condition,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0231,2026-02-02,Digboi,Well Pad,Maintenance,Unsafe Act,Housekeeping improvement required around the equipment.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0232,2025-01-26,Digboi,Processing Plant,Inspection,Near Miss,General housekeeping condition requires attention.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0233,2025-11-07,Tinsukia,Tank Farm,Maintenance,Unsafe Act,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,
+OIL-SYN-0234,2025-02-28,KGB,Tank Farm,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0235,2025-10-31,Tinsukia,Maintenance Area,Inspection,Unsafe Condition,Loose packaging material was found near the warehouse.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0236,2025-07-22,Duliajan,Well Pad,Maintenance,Unsafe Act,"During routine inspection, Fall arrest equipment was not connected during maintenance.",Fall from Height,Gravity,Fall Protection,YES,Working at Height,Working at Height Failure
+OIL-SYN-0237,2025-05-29,KGB,Drilling Rig,Inspection,Unsafe Condition,Minor housekeeping issue observed in the work area.,Housekeeping,None,Housekeeping Control,NO,,
+OIL-SYN-0238,2025-03-31,Naharkatiya,Tank Farm,Inspection,Near Miss,Minor PPE compliance issue observed with no exposure to high energy.,Minor PPE Issue,None,PPE,NO,,
+OIL-SYN-0239,2025-10-14,KGB,Drilling Rig,Vehicle Movement,Unsafe Act,"During site activity, Pedestrian walked close to a moving vehicle in the work area.",Vehicle Strike,Vehicle Energy,Traffic Control,YES,Driving,Vehicle-Pedestrian Interaction
+OIL-SYN-0240,2025-02-09,KGB,Compressor Station,Inspection,Near Miss,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0241,2025-11-24,Jorhat,Processing Plant,Inspection,Unsafe Condition,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0242,2025-06-16,Naharkatiya,Compressor Station,Production Operation,Unsafe Condition,Interlock was found defeated during operation.,Unexpected Energy Release,Stored Energy,Safety Interlock,YES,Bypassing Safety Controls,Safety Control Bypass
+OIL-SYN-0243,2025-05-05,Jorhat,Compressor Station,Inspection,Near Miss,Small material obstruction noticed near the work area.,Material Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0244,2026-03-22,Bokakhat,Electrical Substation,Lifting Operation,Unsafe Act,Field observation: Load was being lifted while workers remained nearby.,Dropped Object,Gravity,Lifting Plan,YES,Safe Mechanical Lifting,Lifting Operation Failure
+OIL-SYN-0245,2025-11-21,Digboi,Maintenance Area,Pipeline Work,Unsafe Condition,Field observation: Job was initiated without confirming the work permit.,Pressure Release,Pressure,Permit to Work,YES,Work Authorisation,Unauthorised Work
+OIL-SYN-0246,2026-02-24,Naharkatiya,Gas Gathering Station,Inspection,Unsafe Act,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0247,2025-03-30,Naharkatiya,Warehouse,Inspection,Unsafe Act,Small amount of waste material found near the walkway.,Poor Storage,None,Storage Control,NO,,
+OIL-SYN-0248,2025-11-18,Tinsukia,Pipeline Corridor,Inspection,Near Miss,Small water accumulation observed near the walkway.,Water Accumulation,None,Housekeeping Control,NO,,
+OIL-SYN-0249,2025-08-18,KGB,Warehouse,Inspection,Unsafe Act,Walkway requires better housekeeping.,Walkway Obstruction,None,Housekeeping Control,NO,,
+OIL-SYN-0250,2025-08-29,Tinsukia,Warehouse,Maintenance,Unsafe Condition,Some tools were left outside the designated storage location.,Poor Tool Storage,None,Tool Storage,NO,,

@@ -1,0 +1,10 @@
+activity,total_reports,sif_reports,average_risk,sif_rate
+Confined Space Entry,10,10,67.5,100.0
+Hot Work,6,6,80.0,100.0
+Inspection,146,0,0.0,0.0
+Lifting Operation,8,8,61.875,100.0
+Maintenance,56,13,18.75,23.21
+Mechanical Work,8,8,69.375,100.0
+Pipeline Work,6,6,72.5,100.0
+Production Operation,3,3,75.0,100.0
+Vehicle Movement,7,7,62.142857142857146,100.0

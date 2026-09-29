@@ -1,0 +1,13 @@
+location,total_reports,sif_reports,average_risk,sif_rate
+Compressor Station,25,8,23.6,32.0
+Drilling Rig,33,6,11.363636363636363,18.18
+Electrical Substation,19,4,13.421052631578947,21.05
+Gas Gathering Station,16,2,8.4375,12.5
+Maintenance Area,14,5,27.5,35.71
+Pipeline Corridor,29,7,17.24137931034483,24.14
+Processing Plant,17,2,9.705882352941176,11.76
+Production Area,22,3,8.863636363636363,13.64
+Tank Farm,23,7,22.391304347826086,30.43
+Warehouse,21,8,27.38095238095238,38.1
+Well Pad,16,7,31.875,43.75
+Workshop,15,2,10.0,13.33

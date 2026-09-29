@@ -1,0 +1,5 @@
+{
+  "rows": 250,
+  "seconds": 0.07470919999968828,
+  "scope": "CSV loading, preprocessing, extraction, SIF detection, risk scoring and aggregation; excludes imports, UI and export"
+}

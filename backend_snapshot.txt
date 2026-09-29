@@ -1,0 +1,1594 @@
+﻿
+
+==================== app.py ====================
+
+import os
+import sys
+
+import pandas as pd
+import streamlit as st
+
+
+st.set_page_config(
+    page_title="PETRO-CORE // DPR AI Synthesis",
+    page_icon="â—†",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+
+SRC_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SRC_DIR)
+
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
+
+
+try:
+    from ui.styles import COMMAND_CSS
+    st.markdown(COMMAND_CSS, unsafe_allow_html=True)
+except Exception:
+    COMMAND_CSS = ""
+
+try:
+    from sif_detector import load_and_detect
+    from risk_scoring import apply_risk_scoring
+    from pattern_analysis import analyze_patterns
+    from ui.metrics import compute_metrics
+    from ui.views import render_page, render_sidebar, render_topbar
+
+    IMPORT_SUCCESS = True
+except Exception as e:
+    IMPORT_SUCCESS = False
+    IMPORT_ERROR = str(e)
+
+
+if not IMPORT_SUCCESS:
+    st.error("Unable to load the SIF analysis pipeline.")
+    st.code(IMPORT_ERROR, language="text")
+    st.stop()
+
+
+DEFAULT_DATASET = os.path.join(ROOT_DIR, "data", "synthetic_reports.csv")
+
+st.sidebar.markdown('<div class="pc-kicker">Data Source</div>', unsafe_allow_html=True)
+uploaded_file = st.sidebar.file_uploader("Upload safety reports CSV", type=["csv"])
+
+
+@st.cache_data(show_spinner=False)
+def run_pipeline(file_path: str, signature: str):
+    df = load_and_detect(file_path)
+    df = apply_risk_scoring(df)
+    patterns = analyze_patterns(df)
+    return df, patterns
+
+
+if uploaded_file is not None:
+    df_input = pd.read_csv(uploaded_file)
+    temp_dir = os.path.join(SRC_DIR, "data")
+    os.makedirs(temp_dir, exist_ok=True)
+    pipeline_file = os.path.join(temp_dir, "_dashboard_input.csv")
+    df_input.to_csv(pipeline_file, index=False)
+    signature = f"upload:{uploaded_file.name}:{len(df_input)}"
+    data_note = f"Uploaded {len(df_input)} reports"
+else:
+    if not os.path.exists(DEFAULT_DATASET):
+        st.error("Default dataset not found: " + DEFAULT_DATASET)
+        st.stop()
+    pipeline_file = DEFAULT_DATASET
+    signature = f"default:{os.path.getmtime(DEFAULT_DATASET)}"
+    data_note = "Using data/synthetic_reports.csv"
+
+
+try:
+    with st.spinner("Running SIF precursor pipelineâ€¦"):
+        df, patterns = run_pipeline(pipeline_file, signature)
+except Exception as e:
+    st.error("Error while processing reports.")
+    st.exception(e)
+    st.stop()
+
+
+metrics = compute_metrics(df)
+page = render_sidebar(metrics, data_note)
+df_view = render_topbar(df, metrics)
+metrics_view = compute_metrics(df_view)
+if page in {"manifolds", "pipelines"}:
+    render_page(page, df_view, patterns, metrics_view)
+else:
+    render_page(page, df_view, analyze_patterns(df_view) if len(df_view) != len(df) else patterns, metrics_view)
+
+
+
+==================== entity_extraction.py ====================
+
+import pandas as pd
+
+
+# ============================================================
+# SAFETY ENTITY KNOWLEDGE
+# ============================================================
+
+HAZARD_KEYWORDS = {
+    "Electrical Energy": [
+        "electrical",
+        "energized",
+        "electric shock",
+        "live equipment"
+    ],
+
+    "Fire": [
+        "fire",
+        "flame",
+        "ignition",
+        "smoke"
+    ],
+
+    "Working at Height": [
+        "height",
+        "fall",
+        "ladder",
+        "scaffold"
+    ],
+
+    "Confined Space": [
+        "confined space",
+        "tank entry",
+        "vessel entry"
+    ],
+
+    "Vehicle": [
+        "vehicle",
+        "truck",
+        "crane",
+        "forklift"
+    ],
+
+    "Pressure": [
+        "pressure",
+        "pressurized",
+        "pressure release"
+    ],
+
+    "Chemical": [
+        "chemical",
+        "toxic",
+        "chemical exposure"
+    ],
+
+    "Line of Fire": [
+        "line of fire",
+        "struck by",
+        "caught between"
+    ],
+
+    "Material Obstruction": [
+        "obstruction",
+        "blocked",
+        "material obstruction"
+    ],
+
+    "Housekeeping": [
+        "housekeeping",
+        "oil stain",
+        "spill"
+    ]
+}
+
+
+ENERGY_KEYWORDS = {
+    "Electrical Energy": [
+        "electrical",
+        "energized",
+        "electric"
+    ],
+
+    "Pressure Energy": [
+        "pressure",
+        "pressurized",
+        "pressure release"
+    ],
+
+    "Mechanical Energy": [
+        "mechanical",
+        "moving equipment",
+        "rotating"
+    ],
+
+    "Chemical Energy": [
+        "chemical",
+        "toxic"
+    ],
+
+    "Gravity": [
+        "height",
+        "fall",
+        "dropped object"
+    ]
+}
+
+
+BARRIER_KEYWORDS = {
+    "Lockout Tagout": [
+        "lockout",
+        "tagout",
+        "isolation",
+        "isolated"
+    ],
+
+    "Permit to Work": [
+        "permit",
+        "ptw",
+        "permit to work"
+    ],
+
+    "Personal Protective Equipment": [
+        "ppe",
+        "protective equipment",
+        "helmet",
+        "gloves"
+    ],
+
+    "Housekeeping Control": [
+        "housekeeping",
+        "obstruction",
+        "material",
+        "spill",
+        "oil stain"
+    ],
+
+    "Fire Control": [
+        "fire",
+        "ignition",
+        "hot work"
+    ]
+}
+
+
+# ============================================================
+# FIND KEYWORD MATCHES
+# ============================================================
+
+def find_matches(text, keyword_dictionary):
+
+    matches = []
+
+    text = str(text).lower()
+
+    for category, keywords in keyword_dictionary.items():
+
+        for keyword in keywords:
+
+            if keyword in text:
+                matches.append(category)
+                break
+
+    return matches
+
+
+# ============================================================
+# EXTRACT ENTITIES FROM ONE REPORT
+# ============================================================
+
+def extract_entities(text):
+
+    if not isinstance(text, str):
+        text = ""
+
+    hazards = find_matches(text, HAZARD_KEYWORDS)
+
+    energies = find_matches(text, ENERGY_KEYWORDS)
+
+    barriers = find_matches(text, BARRIER_KEYWORDS)
+
+    return {
+        "hazards": hazards,
+        "energy": energies,
+        "barriers": barriers
+    }
+
+
+# ============================================================
+# APPLY EXTRACTION TO DATASET
+# ============================================================
+
+def extract_from_dataframe(df):
+
+    df = df.copy()
+
+    results = df["clean_text"].apply(extract_entities)
+
+    df["extracted_hazard"] = results.apply(
+        lambda x: ", ".join(x["hazards"])
+    )
+
+    df["extracted_energy"] = results.apply(
+        lambda x: ", ".join(x["energy"])
+    )
+
+    df["extracted_barrier"] = results.apply(
+        lambda x: ", ".join(x["barriers"])
+    )
+
+    return df
+
+
+# ============================================================
+# TEST
+# ============================================================
+
+if __name__ == "__main__":
+
+    from preprocessing import load_and_preprocess
+
+    file_path = "data/synthetic_reports.csv"
+
+    df = load_and_preprocess(file_path)
+
+    df = extract_from_dataframe(df)
+
+    print("=" * 70)
+    print("ENTITY EXTRACTION TEST")
+    print("=" * 70)
+
+    print()
+    print("Reports processed:", len(df))
+
+    print()
+    print("Extracted entities:")
+    print()
+
+    for _, row in df.head(10).iterrows():
+
+        print("Report ID:", row["report_id"])
+        print("Text:", row["free_text"])
+        print("Hazard:", row["extracted_hazard"])
+        print("Energy:", row["extracted_energy"])
+        print("Barrier:", row["extracted_barrier"])
+
+        print("-" * 70)
+
+
+==================== evaluate_detector.py ====================
+
+import pandas as pd
+from sklearn.metrics import (
+    confusion_matrix,
+    classification_report,
+    accuracy_score
+)
+
+from preprocessing import load_and_preprocess
+from entity_extraction import extract_from_dataframe
+from sif_detector import apply_sif_detection
+
+
+print("=" * 70)
+print("SIF PRECURSOR DETECTOR EVALUATION")
+print("=" * 70)
+
+# ------------------------------------------------------------
+# LOAD AND PROCESS DATA
+# ------------------------------------------------------------
+
+file_path = "data/synthetic_reports.csv"
+
+print("\nLoading reports...")
+
+df = load_and_preprocess(file_path)
+
+print("Reports loaded:", len(df))
+
+# Entity extraction
+df = extract_from_dataframe(df)
+
+# SIF detection
+df = apply_sif_detection(df)
+
+
+# ------------------------------------------------------------
+# CONVERT LABELS
+# ------------------------------------------------------------
+
+y_true = df["ground_truth_sif"].map({
+    "NO": 0,
+    "YES": 1
+})
+
+y_pred = df["predicted_sif"].map({
+    "NO": 0,
+    "YES": 1
+})
+
+
+# ------------------------------------------------------------
+# CONFUSION MATRIX
+# ------------------------------------------------------------
+
+cm = confusion_matrix(y_true, y_pred)
+
+tn, fp, fn, tp = cm.ravel()
+
+
+print("\n" + "=" * 70)
+print("DATASET SUMMARY")
+print("=" * 70)
+
+print("Total reports:", len(df))
+
+print("\nActual SIF:")
+print(df["ground_truth_sif"].value_counts())
+
+print("\nPredicted SIF:")
+print(df["predicted_sif"].value_counts())
+
+
+# ------------------------------------------------------------
+# CONFUSION MATRIX RESULTS
+# ------------------------------------------------------------
+
+print("\n" + "=" * 70)
+print("CONFUSION MATRIX")
+print("=" * 70)
+
+print()
+print("                 PREDICTED")
+print("                 NO       YES")
+print()
+print(f"ACTUAL NO       {tn:<8} {fp}")
+print(f"ACTUAL YES      {fn:<8} {tp}")
+
+
+print("\nTrue Negatives :", tn)
+print("False Positives:", fp)
+print("False Negatives:", fn)
+print("True Positives :", tp)
+
+
+# ------------------------------------------------------------
+# PERFORMANCE
+# ------------------------------------------------------------
+
+print("\n" + "=" * 70)
+print("PERFORMANCE")
+print("=" * 70)
+
+accuracy = accuracy_score(y_true, y_pred)
+
+print("\nAccuracy:", round(accuracy, 4))
+
+print("\nClassification Report:")
+
+print(
+    classification_report(
+        y_true,
+        y_pred,
+        target_names=["NO SIF", "SIF"],
+        zero_division=0
+    )
+)
+
+
+# ------------------------------------------------------------
+# MISSED SIF REPORTS
+# ------------------------------------------------------------
+
+missed = df[
+    (df["ground_truth_sif"] == "YES") &
+    (df["predicted_sif"] == "NO")
+]
+
+print("\n" + "=" * 70)
+print("MISSED SIF REPORTS")
+print("=" * 70)
+
+print("\nNumber of missed SIF reports:", len(missed))
+
+for _, row in missed.iterrows():
+
+    print("\nReport ID:", row["report_id"])
+    print("Text:", row["free_text"])
+    print("Hazard:", row["extracted_hazard"])
+    print("Energy:", row["extracted_energy"])
+    print("Score:", row["sif_score"])
+    print("Indicators:", row["sif_indicators"])
+
+
+print("\n" + "=" * 70)
+print("EVALUATION COMPLETE")
+print("=" * 70)
+
+
+==================== pattern_analysis.py ====================
+
+import pandas as pd
+
+# ============================================================
+# SIF PRECURSOR PATTERN ANALYSIS
+# ============================================================
+
+def analyze_patterns(df):
+
+    df = df.copy()
+
+    # --------------------------------------------------------
+    # Convert date
+    # --------------------------------------------------------
+
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
+    # --------------------------------------------------------
+    # 1. SIF patterns by site
+    # --------------------------------------------------------
+
+    site_patterns = (
+        df.groupby("site")
+        .agg(
+            total_reports=("report_id", "count"),
+            sif_reports=("predicted_sif", lambda x: (x == "YES").sum()),
+            average_risk=("risk_score", "mean")
+        )
+        .reset_index()
+    )
+
+    site_patterns["sif_rate"] = (
+        site_patterns["sif_reports"]
+        / site_patterns["total_reports"]
+        * 100
+    ).round(2)
+
+    # --------------------------------------------------------
+    # 2. SIF patterns by location
+    # --------------------------------------------------------
+
+    location_patterns = (
+        df.groupby("location")
+        .agg(
+            total_reports=("report_id", "count"),
+            sif_reports=("predicted_sif", lambda x: (x == "YES").sum()),
+            average_risk=("risk_score", "mean")
+        )
+        .reset_index()
+    )
+
+    location_patterns["sif_rate"] = (
+        location_patterns["sif_reports"]
+        / location_patterns["total_reports"]
+        * 100
+    ).round(2)
+
+    # --------------------------------------------------------
+    # 3. SIF patterns by activity
+    # --------------------------------------------------------
+
+    activity_patterns = (
+        df.groupby("activity")
+        .agg(
+            total_reports=("report_id", "count"),
+            sif_reports=("predicted_sif", lambda x: (x == "YES").sum()),
+            average_risk=("risk_score", "mean")
+        )
+        .reset_index()
+    )
+
+    activity_patterns["sif_rate"] = (
+        activity_patterns["sif_reports"]
+        / activity_patterns["total_reports"]
+        * 100
+    ).round(2)
+
+    # --------------------------------------------------------
+    # 4. Risk-level distribution
+    # --------------------------------------------------------
+
+    risk_distribution = (
+        df["risk_level"]
+        .value_counts()
+        .reset_index()
+    )
+
+    risk_distribution.columns = ["risk_level", "report_count"]
+
+    # --------------------------------------------------------
+    # 5. Precursor indicator frequency
+    # --------------------------------------------------------
+
+    indicator_counts = {}
+
+    for indicators in df["sif_indicators"].fillna(""):
+
+        if not indicators:
+            continue
+
+        for indicator in indicators.split(", "):
+
+            if indicator:
+                indicator_counts[indicator] = (
+                    indicator_counts.get(indicator, 0) + 1
+                )
+
+    indicator_patterns = pd.DataFrame(
+        list(indicator_counts.items()),
+        columns=["indicator", "count"]
+    )
+
+    if not indicator_patterns.empty:
+        indicator_patterns = indicator_patterns.sort_values(
+            "count",
+            ascending=False
+        )
+
+    # --------------------------------------------------------
+    # 6. Primary risk frequency
+    # --------------------------------------------------------
+
+    primary_risk_patterns = (
+        df["primary_risk"]
+        .value_counts()
+        .reset_index()
+    )
+
+    primary_risk_patterns.columns = [
+        "primary_risk",
+        "count"
+    ]
+
+    # --------------------------------------------------------
+    # 7. Barrier failure frequency
+    # --------------------------------------------------------
+
+    barrier_counts = {}
+
+    for barriers in df["barrier_failures"].fillna(""):
+
+        if not barriers:
+            continue
+
+        for barrier in barriers.split(", "):
+
+            if barrier:
+                barrier_counts[barrier] = (
+                    barrier_counts.get(barrier, 0) + 1
+                )
+
+    barrier_patterns = pd.DataFrame(
+        list(barrier_counts.items()),
+        columns=["barrier_failure", "count"]
+    )
+
+    if not barrier_patterns.empty:
+        barrier_patterns = barrier_patterns.sort_values(
+            "count",
+            ascending=False
+        )
+
+    return {
+        "site_patterns": site_patterns,
+        "location_patterns": location_patterns,
+        "activity_patterns": activity_patterns,
+        "risk_distribution": risk_distribution,
+        "indicator_patterns": indicator_patterns,
+        "primary_risk_patterns": primary_risk_patterns,
+        "barrier_patterns": barrier_patterns
+    }
+
+
+# ============================================================
+# TEST
+# ============================================================
+
+if __name__ == "__main__":
+
+    from sif_detector import load_and_detect
+    from risk_scoring import apply_risk_scoring
+
+    file_path = "data/synthetic_reports.csv"
+
+    print("=" * 70)
+    print("SIF PRECURSOR PATTERN ANALYSIS")
+    print("=" * 70)
+
+    # --------------------------------------------------------
+    # Load complete pipeline
+    # --------------------------------------------------------
+
+    print()
+    print("Loading reports...")
+
+    df = load_and_detect(file_path)
+
+    print("Reports loaded:", len(df))
+
+    # --------------------------------------------------------
+    # Apply risk scoring
+    # --------------------------------------------------------
+
+    df = apply_risk_scoring(df)
+
+    # --------------------------------------------------------
+    # Analyze patterns
+    # --------------------------------------------------------
+
+    results = analyze_patterns(df)
+
+    # --------------------------------------------------------
+    # Site patterns
+    # --------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("SIF PATTERNS BY SITE")
+    print("=" * 70)
+
+    print(
+        results["site_patterns"]
+        .sort_values("sif_rate", ascending=False)
+        .to_string(index=False)
+    )
+
+    # --------------------------------------------------------
+    # Location patterns
+    # --------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("SIF PATTERNS BY LOCATION")
+    print("=" * 70)
+
+    print(
+        results["location_patterns"]
+        .sort_values("sif_rate", ascending=False)
+        .head(10)
+        .to_string(index=False)
+    )
+
+    # --------------------------------------------------------
+    # Activity patterns
+    # --------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("SIF PATTERNS BY ACTIVITY")
+    print("=" * 70)
+
+    print(
+        results["activity_patterns"]
+        .sort_values("sif_rate", ascending=False)
+        .to_string(index=False)
+    )
+
+    # --------------------------------------------------------
+    # Risk distribution
+    # --------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("RISK LEVEL DISTRIBUTION")
+    print("=" * 70)
+
+    print(
+        results["risk_distribution"]
+        .to_string(index=False)
+    )
+
+    # --------------------------------------------------------
+    # Precursor indicators
+    # --------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("TOP SIF PRECURSOR INDICATORS")
+    print("=" * 70)
+
+    if results["indicator_patterns"].empty:
+        print("No indicators found.")
+    else:
+        print(
+            results["indicator_patterns"]
+            .head(10)
+            .to_string(index=False)
+        )
+
+    # --------------------------------------------------------
+    # Primary risks
+    # --------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("PRIMARY RISK DISTRIBUTION")
+    print("=" * 70)
+
+    print(
+        results["primary_risk_patterns"]
+        .head(10)
+        .to_string(index=False)
+    )
+
+    # --------------------------------------------------------
+    # Barrier failures
+    # --------------------------------------------------------
+
+    print()
+    print("=" * 70)
+    print("BARRIER FAILURE PATTERNS")
+    print("=" * 70)
+
+    if results["barrier_patterns"].empty:
+        print("No barrier failures found.")
+    else:
+        print(
+            results["barrier_patterns"]
+            .head(10)
+            .to_string(index=False)
+        )
+
+    print()
+    print("=" * 70)
+    print("PATTERN ANALYSIS COMPLETE")
+    print("=" * 70)
+
+
+==================== preprocessing.py ====================
+
+import re
+import pandas as pd
+
+
+ABBREVIATIONS = {
+    "loto": "lockout tagout",
+    "ptw": "permit to work",
+    "ppe": "personal protective equipment",
+    "lof": "line of fire",
+}
+
+
+def clean_text(text):
+    """
+    Clean and normalize safety report text.
+    """
+
+    if pd.isna(text):
+        return ""
+
+    text = str(text).lower()
+
+    for abbreviation, replacement in ABBREVIATIONS.items():
+        text = text.replace(abbreviation, replacement)
+    text = text.replace("nearthe", "near the")
+    text = text.replace("noticednear", "noticed near")
+    text = text.replace("supplyremained", "supply remained")
+    text = text.replace("equipmentwhile", "equipment while")
+
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def preprocess_dataframe(df):
+    """
+    Add cleaned text to the dataframe.
+    """
+
+    if "free_text" not in df.columns:
+        raise ValueError(
+            "The dataframe must contain a 'free_text' column."
+        )
+
+    df = df.copy()
+
+    df["clean_text"] = df["free_text"].apply(clean_text)
+
+    return df
+
+
+def load_and_preprocess(csv_path):
+    """
+    Load CSV and preprocess the safety reports.
+    """
+
+    df = pd.read_csv(csv_path)
+
+    return preprocess_dataframe(df)
+
+
+if __name__ == "__main__":
+
+    file_path = "data/synthetic_reports.csv"
+
+    df = load_and_preprocess(file_path)
+
+    print("=" * 60)
+    print("PREPROCESSING TEST")
+    print("=" * 60)
+
+    print(f"\nReports loaded: {len(df)}")
+
+    print("\nOriginal vs cleaned text:\n")
+
+    for _, row in df.head(5).iterrows():
+
+        print("Original:")
+        print(row["free_text"])
+
+        print("\nCleaned:")
+        print(row["clean_text"])
+
+        print("-" * 60)
+
+
+==================== risk_scoring.py ====================
+
+import pandas as pd
+
+
+# ============================================================
+# RISK SCORING CONFIGURATION
+# ============================================================
+
+HIGH_RISK_INDICATORS = {
+    "Electrical Energy",
+    "Confined Space",
+    "Working at Height",
+    "Pressure",
+    "Mechanical Energy",
+    "Line of Fire",
+    "Vehicle",
+    "Hot Work",
+    "Safety Control Bypass",
+    "Work Authorization"
+}
+
+
+# ============================================================
+# BARRIER FAILURE INDICATORS
+# ============================================================
+
+BARRIER_FAILURE_KEYWORDS = [
+    "without",
+    "missing",
+    "not completed",
+    "not confirmed",
+    "not used",
+    "not provided",
+    "not in place",
+    "remained connected",
+    "overridden",
+    "overrode",
+    "defeated",
+    "bypassed",
+    "without proper",
+    "without required",
+    "required authorization was missing"
+]
+
+
+# ============================================================
+# DETECT BARRIER FAILURE
+# ============================================================
+
+def detect_barrier_failure(text):
+
+    text = str(text).lower()
+
+    matched = []
+
+    for keyword in BARRIER_FAILURE_KEYWORDS:
+
+        if keyword in text:
+            matched.append(keyword)
+
+    return matched
+
+
+# ============================================================
+# CALCULATE RISK
+# ============================================================
+
+def calculate_risk(
+    text,
+    predicted_sif,
+    sif_score,
+    sif_indicators,
+    extracted_hazard="",
+    extracted_energy="",
+    extracted_barrier=""
+):
+
+    text = str(text).lower()
+
+    # --------------------------------------------------------
+    # CONVERT SIF INDICATORS INTO LIST
+    # --------------------------------------------------------
+
+    if isinstance(sif_indicators, str):
+
+        indicators = [
+            x.strip()
+            for x in sif_indicators.split(",")
+            if x.strip()
+        ]
+
+    elif isinstance(sif_indicators, list):
+
+        indicators = sif_indicators
+
+    else:
+
+        indicators = []
+
+    # --------------------------------------------------------
+    # INITIAL SCORE
+    # --------------------------------------------------------
+
+    score = 0
+    risk_factors = []
+
+    # --------------------------------------------------------
+    # SIF PRECURSOR DETECTED
+    # --------------------------------------------------------
+
+    if predicted_sif == "YES":
+
+        score += 40
+
+        risk_factors.append(
+            "SIF precursor detected"
+        )
+
+    # --------------------------------------------------------
+    # HIGH-RISK INDICATOR
+    # --------------------------------------------------------
+
+    high_risk_matches = [
+        indicator
+        for indicator in indicators
+        if indicator in HIGH_RISK_INDICATORS
+    ]
+
+    if high_risk_matches:
+
+        score += 20
+
+        risk_factors.append(
+            "High-risk indicator: "
+            + ", ".join(high_risk_matches)
+        )
+
+    # --------------------------------------------------------
+    # HAZARDOUS ENERGY
+    # --------------------------------------------------------
+
+    if extracted_energy:
+
+        score += 15
+
+        risk_factors.append(
+            "Hazardous energy identified"
+        )
+
+    # --------------------------------------------------------
+    # BARRIER FAILURE
+    # --------------------------------------------------------
+
+    barrier_failures = detect_barrier_failure(text)
+
+    if barrier_failures:
+
+        score += 15
+
+        risk_factors.append(
+            "Barrier/control failure detected"
+        )
+
+    # --------------------------------------------------------
+    # MULTIPLE SIF INDICATORS
+    # --------------------------------------------------------
+
+    if len(indicators) >= 2:
+
+        score += 10
+
+        risk_factors.append(
+            "Multiple SIF precursor indicators"
+        )
+
+    # --------------------------------------------------------
+    # MAXIMUM SCORE
+    # --------------------------------------------------------
+
+    score = min(score, 100)
+
+    # --------------------------------------------------------
+    # RISK LEVEL
+    # --------------------------------------------------------
+
+    if score >= 80:
+
+        risk_level = "CRITICAL"
+
+    elif score >= 60:
+
+        risk_level = "HIGH"
+
+    elif score >= 30:
+
+        risk_level = "MEDIUM"
+
+    else:
+
+        risk_level = "LOW"
+
+    # --------------------------------------------------------
+    # PRIMARY RISK
+    # --------------------------------------------------------
+
+    if high_risk_matches:
+
+        primary_risk = high_risk_matches[0]
+
+    elif extracted_hazard:
+
+        primary_risk = extracted_hazard
+
+    else:
+
+        primary_risk = "General Safety Risk"
+
+    # --------------------------------------------------------
+    # EXPLANATION
+    # --------------------------------------------------------
+
+    if risk_factors:
+
+        reason = "; ".join(risk_factors)
+
+    else:
+
+        reason = "No significant precursor risk detected"
+
+    # --------------------------------------------------------
+    # RETURN RESULT
+    # --------------------------------------------------------
+
+    return {
+        "risk_score": score,
+        "risk_level": risk_level,
+        "primary_risk": primary_risk,
+        "risk_factors": risk_factors,
+        "barrier_failures": barrier_failures,
+        "risk_reason": reason
+    }
+
+
+# ============================================================
+# APPLY RISK SCORING TO DATAFRAME
+# ============================================================
+
+def apply_risk_scoring(df):
+
+    df = df.copy()
+
+    results = df.apply(
+        lambda row: calculate_risk(
+            row["clean_text"],
+            row["predicted_sif"],
+            row["sif_score"],
+            row["sif_indicators"],
+            row["extracted_hazard"],
+            row["extracted_energy"],
+            row["extracted_barrier"]
+        ),
+        axis=1
+    )
+
+    # --------------------------------------------------------
+    # STORE RESULTS
+    # --------------------------------------------------------
+
+    df["risk_score"] = results.apply(
+        lambda x: x["risk_score"]
+    )
+
+    df["risk_level"] = results.apply(
+        lambda x: x["risk_level"]
+    )
+
+    df["primary_risk"] = results.apply(
+        lambda x: x["primary_risk"]
+    )
+
+    df["risk_factors"] = results.apply(
+        lambda x: ", ".join(x["risk_factors"])
+    )
+
+    df["barrier_failures"] = results.apply(
+        lambda x: ", ".join(x["barrier_failures"])
+    )
+
+    df["risk_reason"] = results.apply(
+        lambda x: x["risk_reason"]
+    )
+
+    return df
+
+
+# ============================================================
+# LOAD COMPLETE PIPELINE
+# ============================================================
+
+def load_and_score(file_path):
+
+    from sif_detector import load_and_detect
+
+    # Load data
+    df = load_and_detect(file_path)
+
+    # Apply risk scoring
+    df = apply_risk_scoring(df)
+
+    return df
+
+
+# ============================================================
+# TEST
+# ============================================================
+
+if __name__ == "__main__":
+
+    file_path = "data/synthetic_reports.csv"
+
+    # Run complete pipeline
+    df = load_and_score(file_path)
+
+    print("=" * 70)
+    print("SIF PRECURSOR RISK SCORING TEST")
+    print("=" * 70)
+
+    print()
+    print("Reports processed:", len(df))
+
+    # --------------------------------------------------------
+    # RISK LEVEL DISTRIBUTION
+    # --------------------------------------------------------
+
+    print()
+    print("Risk level distribution:")
+
+    print(
+        df["risk_level"].value_counts()
+    )
+
+    # --------------------------------------------------------
+    # SAMPLE RESULTS
+    # --------------------------------------------------------
+
+    print()
+    print("Sample risk assessments:")
+    print()
+
+    for _, row in df.head(10).iterrows():
+
+        print("Report ID:", row["report_id"])
+        print("Text:", row["free_text"])
+        print("SIF:", row["predicted_sif"])
+        print("SIF Score:", row["sif_score"])
+        print("Indicators:", row["sif_indicators"])
+        print("Risk Score:", row["risk_score"])
+        print("Risk Level:", row["risk_level"])
+        print("Primary Risk:", row["primary_risk"])
+        print("Risk Factors:", row["risk_factors"])
+        print("Barrier Failures:", row["barrier_failures"])
+        print("Reason:", row["risk_reason"])
+
+        print("-" * 70)
+
+
+==================== sif_detector.py ====================
+
+# ============================================================
+# SIF PRECURSOR INDICATORS
+# ============================================================
+
+SIF_INDICATORS = {
+
+    "Electrical Energy": [
+        "electrical",
+        "energized",
+        "live equipment",
+        "electrical supply remained connected",
+        "power remained connected"
+    ],
+
+    "Confined Space": [
+        "confined space",
+        "tank entry",
+        "vessel entry",
+        "gas testing",
+        "atmospheric testing",
+        "atmosphere testing",
+        "gas test",
+        "entry without gas",
+        "hazardous atmosphere",
+        "hazardous air",
+        "atmosphere during entry",
+        "entry preparation"
+    ],
+
+    "Working at Height": [
+        "working at height",
+        "work at height",
+        "fall",
+        "ladder",
+        "scaffold",
+        "elevated work",
+        "elevated structure",
+        "climbed onto an elevated",
+        "climbed onto",
+        "working on elevated"
+    ],
+
+    "Pressure": [
+        "pressure",
+        "pressurized",
+        "pressure release",
+        "stored pressure"
+    ],
+
+    "Mechanical Energy": [
+        "stored mechanical energy",
+        "moving equipment",
+        "rotating equipment",
+        "mechanical energy",
+        "moving machinery",
+        "active machine",
+        "active machinery",
+        "close to moving machinery",
+        "working close to an active machine"
+    ],
+
+    "Line of Fire": [
+        "line of fire",
+        "struck by",
+        "caught between",
+        "lifting exclusion zone",
+        "exclusion zone",
+        "suspended load",
+        "suspended component",
+        "equipment swing area",
+        "swing area",
+        "beneath a suspended",
+        "under a suspended",
+        "load was being lifted",
+        "workers remained nearby",
+        "workers remained near"
+    ],
+
+    "Vehicle": [
+        "vehicle reversing",
+        "reversing activity",
+        "moving vehicle",
+        "pedestrian control",
+        "close to a moving vehicle",
+        "close to moving vehicle",
+        "vehicle moved through",
+        "vehicle moved",
+        "area occupied by pedestrians",
+        "pedestrians",
+        "light vehicle"
+    ],
+
+    "Hot Work": [
+        "hot work",
+        "welding",
+        "cutting",
+        "grinding",
+        "ignition source"
+    ],
+
+    "Safety Control Bypass": [
+    "safety control was overridden",
+    "safety control overridden",
+    "control was overridden",
+    "control overridden",
+    "bypass",
+    "bypassed",
+    "interlock overridden",
+    "interlock was defeated",
+    "interlock defeated",
+    "interlock was bypassed",
+    "interlock bypassed",
+    "interlock was found defeated"
+],
+
+    "Work Authorization": [
+        "work authorization",
+        "work authorization was not",
+        "without proper work authorization",
+        "without work authorization",
+        "required authorization",
+        "authorization was missing",
+        "required authorization was missing",
+        "without authorization",
+        "permit",
+        "without permit",
+        "work permit"
+    ],
+
+    "Fire": [
+        "fire",
+        "flame",
+        "ignition"
+    ]
+}
+
+
+# ============================================================
+# HIGH-RISK SIF CATEGORIES
+# ============================================================
+
+HIGH_RISK_INDICATORS = {
+    "Electrical Energy",
+    "Confined Space",
+    "Working at Height",
+    "Pressure",
+    "Mechanical Energy",
+    "Line of Fire",
+    "Vehicle",
+    "Hot Work",
+    "Safety Control Bypass",
+    "Work Authorization"
+}
+
+
+# ============================================================
+# SIF DETECTION
+# ============================================================
+
+def detect_sif(text, extracted_hazard="", extracted_energy=""):
+
+    text = str(text).lower()
+
+    matched_indicators = []
+
+    for category, keywords in SIF_INDICATORS.items():
+
+        for keyword in keywords:
+
+            if keyword in text:
+                matched_indicators.append(category)
+                break
+
+    # --------------------------------------------------------
+    # RISK SCORING
+    # --------------------------------------------------------
+
+    score = 0
+
+    # High-energy extracted entity
+    if extracted_energy:
+        score += 40
+
+    # High-risk SIF precursor
+    high_risk_matches = [
+        indicator
+        for indicator in matched_indicators
+        if indicator in HIGH_RISK_INDICATORS
+    ]
+
+    if high_risk_matches:
+        score += 60
+
+    # Fire indicator
+    if "Fire" in matched_indicators:
+        score += 40
+
+    # Multiple independent indicators
+    if len(matched_indicators) >= 2:
+        score += 20
+
+    # Maximum score = 100
+    score = min(score, 100)
+
+    # --------------------------------------------------------
+    # CLASSIFICATION
+    # --------------------------------------------------------
+
+    if score >= 60:
+        prediction = "YES"
+    else:
+        prediction = "NO"
+
+    return {
+        "sif_prediction": prediction,
+        "sif_score": score,
+        "sif_indicators": matched_indicators
+    }
+
+
+# ============================================================
+# APPLY TO DATASET
+# ============================================================
+
+def apply_sif_detection(df):
+
+    df = df.copy()
+
+    results = df.apply(
+        lambda row: detect_sif(
+            row["clean_text"],
+            row["extracted_hazard"],
+            row["extracted_energy"]
+        ),
+        axis=1
+    )
+
+    df["predicted_sif"] = results.apply(
+        lambda x: x["sif_prediction"]
+    )
+
+    df["sif_score"] = results.apply(
+        lambda x: x["sif_score"]
+    )
+
+    df["sif_indicators"] = results.apply(
+        lambda x: ", ".join(x["sif_indicators"])
+    )
+
+    return df
+
+
+# ============================================================
+# LOAD AND DETECT
+# ============================================================
+
+def load_and_detect(file_path):
+
+    from preprocessing import load_and_preprocess
+    from entity_extraction import extract_from_dataframe
+
+    df = load_and_preprocess(file_path)
+
+    df = extract_from_dataframe(df)
+
+    df = apply_sif_detection(df)
+
+    return df
+
+
+# ============================================================
+# TEST
+# ============================================================
+
+if __name__ == "__main__":
+
+    file_path = "data/synthetic_reports.csv"
+
+    df = load_and_detect(file_path)
+
+    print("=" * 70)
+    print("SIF PRECURSOR DETECTION TEST")
+    print("=" * 70)
+
+    print()
+    print("Reports processed:", len(df))
+
+    print()
+    print("Predicted SIF counts:")
+    print(df["predicted_sif"].value_counts())
+
+    print()
+    print("Sample predictions:")
+    print()
+
+    for _, row in df.head(10).iterrows():
+
+        print("Report ID:", row["report_id"])
+        print("Text:", row["free_text"])
+        print("Hazard:", row["extracted_hazard"])
+        print("Energy:", row["extracted_energy"])
+        print("SIF Prediction:", row["predicted_sif"])
+        print("SIF Score:", row["sif_score"])
+        print("Indicators:", row["sif_indicators"])
+        print("Ground Truth:", row["ground_truth_sif"])
+
+        print("-" * 70)

@@ -1,0 +1,21 @@
+{
+  ".streamlit/config.toml": "1063c5ca0af52eb15e16ac4ba240481342af88aaa3e477b5f278c8a696256ebe",
+  "app.py": "5aa8b000443d96754436d1fff146e95c64cd837005c4a57f04417a05c53f6cd9",
+  "backend_snapshot.txt": "ff6b9cc6fae49ba21b0a5402ca113a1f968cbc3c1f974928469bef7f0c9b7979",
+  "data/synthetic_reports.csv": "9422aa05f92d32e82b701b0fc497664f52121daab7ec7e589a66d76a4eef80a4",
+  "generate_data.py": "78f8a5355facdf3b62c201876473c603aceb7ed9be86a4b0338b8fdf3b19feff",
+  "requirements.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/app.py": "8c8e7d362aeab50d183104110af745cda982ee3450d8491672e83f9a6a9c9b50",
+  "src/data/_dashboard_input.csv": "8d54d5e775b8f669149242844aaf4c6ce8fca66eb9d605ad2caf9c6093296b58",
+  "src/entity_extraction.py": "4399f32ae307cb73bf374e1099fe9a285e7a1c0a729a91c754fd681ece04d5ec",
+  "src/evaluate_detector.py": "21fb582524b86b799a86b9fc217faeeb30dceb844907a99eaed6b674e7210226",
+  "src/pattern_analysis.py": "cb7aca5cabb045f76dbee034fe5c7480819a7a52bb761ab448bd75bf6d555ae1",
+  "src/preprocessing.py": "16f0992ce6953e0fd367af83f29f8e3d53d0885a84c0125b86b5078fbedbf1b8",
+  "src/risk_scoring.py": "9af99ebf8eafc6f4388b291ac628b56a41fe69ba217e1cb4272e118e4d528ffa",
+  "src/sif_detector.py": "628d294d1f34355a968cfc256decdefd16029359fde94d6a5bdc4084feec8b7f",
+  "src/ui/__init__.py": "f38c0ed20d721a6e66d6a8ab117ecf43b38e90234584fbba79832fb17ce0adad",
+  "src/ui/metrics.py": "c4bb0046d86da9df7903cc82f0587b97cc88812831ea8a17e11d3e82fbf5ce1d",
+  "src/ui/styles.py": "729a31f91ac0af7d2a6ea34c37a93ba331558ee93d102cbdfbebe701f7804a77",
+  "src/ui/views.py": "f2432cd89106c470cd73ec3cfba1849b0741a6017301430cc5db269cf6e1ff38"
+}
